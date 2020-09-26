@@ -1,8 +1,7 @@
 # Duplicate
-Duplicate exturder settings for Cura
+Duplicate exturder settings for Cura in case of multi-extruder machine
 
  Copies parameters that are different in :
- 
 - resolution
 - shell
 - infill
@@ -11,3 +10,4 @@ Duplicate exturder settings for Cura
 - travel
 - cooling
 - dual
+From one extruder to the others 
