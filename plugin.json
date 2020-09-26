@@ -1,7 +1,7 @@
 {
     "name": "Duplicate",
     "author": "lalliard",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Duplicate Extruder data",
     "api": 7,
     "supported_sdk_versions": ["5.0.0", "6.0.0", "7.0.0"]
