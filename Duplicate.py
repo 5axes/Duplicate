@@ -1,9 +1,6 @@
 # Copyright (c) 2020 Lalliard
 # The Duplicate plugin is released under the terms of the AGPLv3 or higher.
 
-import os
-import platform
-
 from UM.Extension import Extension
 from cura.CuraApplication import CuraApplication
 from cura.CuraVersion import CuraVersion  
