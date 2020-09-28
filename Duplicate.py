@@ -1,6 +1,7 @@
 # Copyright (c) 2020 Lalliard
 # The Duplicate plugin is released under the terms of the AGPLv3 or higher.
 
+
 from UM.Extension import Extension
 from cura.CuraApplication import CuraApplication
 from cura.CuraVersion import CuraVersion  
@@ -18,8 +19,7 @@ class Duplicate(Extension):
     def __init__(self, parent = None) -> None:
         Extension.__init__(self)
 
-        self._controller = CuraApplication.getInstance().getController()
-        
+        # Add Plugin Menu
         self.addMenuItem(i18n_cura_catalog.i18nc("@item:inmenu", "Duplicate Extruder N°1"), self.acTion1)
         self.addMenuItem(i18n_cura_catalog.i18nc("@item:inmenu", "Duplicate Extruder N°2"), self.acTion2)
        
