@@ -18,17 +18,21 @@ class Duplicate(Extension):
 
     def __init__(self, parent = None) -> None:
         Extension.__init__(self)
-
+        
         # Add Plugin Menu
         self.addMenuItem(i18n_cura_catalog.i18nc("@item:inmenu", "Duplicate Extruder N°1"), self.acTion1)
         self.addMenuItem(i18n_cura_catalog.i18nc("@item:inmenu", "Duplicate Extruder N°2"), self.acTion2)
+        self.addMenuItem(i18n_cura_catalog.i18nc("@item:inmenu", "Duplicate Extruder N°3"), self.acTion3)
        
     def acTion1(self) -> None:
         self.CopyExtrud(0)
 
     def acTion2(self) -> None:
         self.CopyExtrud(1)
-    
+
+    def acTion3(self) -> None:
+        self.CopyExtrud(2)
+        
     # Copy parameter form the ExtruderNb (Reference to the Other Extruder)
     def CopyExtrud(self,ExtruderNb) -> None:
     
@@ -40,7 +44,7 @@ class Duplicate(Extension):
         #Get extruder count
         extruder_count=stack.getProperty("machine_extruder_count", "value")
 
-        #Refer=stack.extruderList[int(extruder_count-1)]
+        Refer=stack.extruderList[int(extruder_count-1)]
         # Modification from global_stack to extruders[0]
         
         for Extrud in list(global_stack.extruders.values()):
