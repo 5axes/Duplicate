@@ -64,6 +64,10 @@ class Duplicate(Extension):
                 self._doTree(Refer,Extrud,"travel")
                 self._doTree(Refer,Extrud,"cooling")
                 self._doTree(Refer,Extrud,"dual")
+                
+                self._doTree(Refer,Extrud,"experimental")
+                self._doTree(Refer,Extrud,"blackmagic")
+                self._doTree(Refer,Extrud,"meshfix")
                
     def _doTree(self,ref,stack,key):   
         

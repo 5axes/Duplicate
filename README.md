@@ -8,4 +8,8 @@ Duplicate exturder settings for Cura in case of multi-extruder machine. Copy par
 - travel
 - cooling
 - dual
+- experimental
+- blackmagic"
+- meshfix
+
 From one extruder to the others.
