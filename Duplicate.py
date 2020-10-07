@@ -1,6 +1,10 @@
-# Copyright (c) 2020 Lalliard
+# Copyright (c) 2020 5@xes
+#
 # The Duplicate plugin is released under the terms of the AGPLv3 or higher.
-
+# Release V1.0.2  Update  "resolution","shell","infill","material","speed","travel","cooling","dual"
+# Release V1.0.3  Update   "experimental","blackmagic","meshfix" 
+# Release V1.0.4  Limit the plugin to release 4.5 -> 4.7
+#
 
 from UM.Extension import Extension
 from cura.CuraApplication import CuraApplication
