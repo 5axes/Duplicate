@@ -20,4 +20,4 @@ V1.4   -> Add the possibility to duplicate Datas for extruder :
 - N°2
 - N°3
 
-![Menu(./images/Menu.jpg)
+![Menu](./images/Menu.jpg)
