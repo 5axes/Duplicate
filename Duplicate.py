@@ -39,7 +39,19 @@ class Duplicate(Extension):
         
     # Copy parameter form the ExtruderNb (Reference to the Other Extruder)
     def CopyExtrud(self,ExtruderNb) -> None:
-    
+ 
+        VersC=1.0
+
+        # Test version for futur release 4.9
+        if "master" in CuraVersion or "beta" in CuraVersion or "BETA" in CuraVersion:
+            #Logger.log('d', "Info CuraVersion --> " + str(CuraVersion))
+            VersC=4.9  # Master is always a developement version.
+        else:
+            try:
+                VersC = int(CuraVersion.split(".")[0])+int(CuraVersion.split(".")[1])/10
+            except:
+                pass
+                
         machine_manager = CuraApplication.getInstance().getMachineManager()        
         stack = CuraApplication.getInstance().getGlobalContainerStack()
 
@@ -62,6 +74,9 @@ class Duplicate(Extension):
             if PosE != ExtruderNb:
                 self._doTree(Refer,Extrud,"resolution")
                 self._doTree(Refer,Extrud,"shell")
+                # New section Arachne and 4.9 ?
+                if VersC > 4.8:
+                    self._doTree(Refer,Extrud,"top_bottom")               
                 self._doTree(Refer,Extrud,"infill")
                 self._doTree(Refer,Extrud,"material")
                 self._doTree(Refer,Extrud,"speed")
