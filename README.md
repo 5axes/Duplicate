@@ -3,8 +3,8 @@
 Duplicate exturder settings for Cura in case of multi-extruder machine. Copy parameters that are different in :
 - resolution
 - shell (up to Cura 4.8)
-- walls (From Cura 4.9)
-- top/bottom (From Cura 4.9)
+- walls (from Cura 4.9)
+- top/bottom (from Cura 4.9)
 - infill
 - material
 - speed
