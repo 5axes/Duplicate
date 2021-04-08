@@ -5,11 +5,13 @@
 # Release V1.0.3  Update   "experimental","blackmagic","meshfix" 
 # Release V1.0.4  Limit the plugin to release 4.5 -> 4.7
 # Release V1.0.5  Ready for release Arachne or 4.9 ?
+# Release V1.0.6  Bug correction
 #
 
 from UM.Extension import Extension
 from cura.CuraApplication import CuraApplication
 from cura.CuraVersion import CuraVersion  
+from UM.Version import Version
 
 from UM.i18n import i18nCatalog
 i18n_cura_catalog = i18nCatalog("cura")
@@ -41,15 +43,17 @@ class Duplicate(Extension):
     # Copy parameter form the ExtruderNb (Reference to the Other Extruder)
     def CopyExtrud(self,ExtruderNb) -> None:
  
-        VersC=1.0
+        self.VersC=1.0
 
+        Logger.log('d', "Info CuraVersion --> " + str(CuraVersion))
+        
         # Test version for futur release 4.9
         if "master" in CuraVersion or "beta" in CuraVersion or "BETA" in CuraVersion:
-            #Logger.log('d', "Info CuraVersion --> " + str(CuraVersion))
-            VersC=4.9  # Master is always a developement version.
+            
+            self.VersC=4.9  # Master is always a developement version.
         else:
             try:
-                VersC = int(CuraVersion.split(".")[0])+int(CuraVersion.split(".")[1])/10
+                self.VersC = int(CuraVersion.split(".")[0])+int(CuraVersion.split(".")[1])/10
             except:
                 pass
                 
@@ -74,10 +78,12 @@ class Duplicate(Extension):
             #Logger.log("d", "Extruder = %s %s", str(PosE), str(ExtruderNb))            
             if PosE != ExtruderNb:
                 self._doTree(Refer,Extrud,"resolution")
+                # Shell before 4.9 and now walls
                 self._doTree(Refer,Extrud,"shell")
                 # New section Arachne and 4.9 ?
-                if VersC > 4.8:
-                    self._doTree(Refer,Extrud,"top_bottom")               
+                if self.VersC > 4.8:
+                    self._doTree(Refer,Extrud,"top_bottom")
+                    
                 self._doTree(Refer,Extrud,"infill")
                 self._doTree(Refer,Extrud,"material")
                 self._doTree(Refer,Extrud,"speed")
