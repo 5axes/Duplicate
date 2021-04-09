@@ -43,17 +43,21 @@ class Duplicate(Extension):
     # Copy parameter form the ExtruderNb (Reference to the Other Extruder)
     def CopyExtrud(self,ExtruderNb) -> None:
  
-        self.VersC=1.0
+        self.Major=1
+        self.Minor=0
 
         Logger.log('d', "Info CuraVersion --> " + str(CuraVersion))
         
         # Test version for futur release 4.9
         if "master" in CuraVersion or "beta" in CuraVersion or "BETA" in CuraVersion:
+            # Master is always a developement version.
+            self.Major=4
+            self.Minor=9
             
-            self.VersC=4.9  # Master is always a developement version.
         else:
             try:
-                self.VersC = int(CuraVersion.split(".")[0])+int(CuraVersion.split(".")[1])/10
+                self.Major = int(CuraVersion.split(".")[0])
+                self.Minor = int(CuraVersion.split(".")[1])
             except:
                 pass
                 
@@ -81,7 +85,7 @@ class Duplicate(Extension):
                 # Shell before 4.9 and now walls
                 self._doTree(Refer,Extrud,"shell")
                 # New section Arachne and 4.9 ?
-                if self.VersC > 4.8:
+                if self.Major >= 4 and self.Minor >= 9 :
                     self._doTree(Refer,Extrud,"top_bottom")
                     
                 self._doTree(Refer,Extrud,"infill")
