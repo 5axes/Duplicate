@@ -1,3 +1,4 @@
+#-------------------------------------------------------------------------------------------
 # Copyright (c) 2020-2021 5@xes
 #
 # The Duplicate plugin is released under the terms of the AGPLv3 or higher.
@@ -7,6 +8,7 @@
 # Release V1.0.5  Ready for release Arachne or 4.9 ?
 # Release V1.0.6  Bug correction
 #
+#-------------------------------------------------------------------------------------------
 
 from UM.Extension import Extension
 from cura.CuraApplication import CuraApplication
