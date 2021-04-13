@@ -6,7 +6,7 @@
 # Release V1.0.3  Update   "experimental","blackmagic","meshfix" 
 # Release V1.0.4  Limit the plugin to release 4.5 -> 4.7
 # Release V1.0.5  Ready for release Arachne or 4.9 ?
-# Release V1.0.6  Bug correction
+# Release V1.0.6  Bug correction and Nozzle diameter used as condition to duplicate resolution section
 #
 #-------------------------------------------------------------------------------------------
 
@@ -32,6 +32,7 @@ class Duplicate(Extension):
         self.addMenuItem(i18n_cura_catalog.i18nc("@item:inmenu", "Duplicate Extruder N°1"), self.acTion1)
         self.addMenuItem(i18n_cura_catalog.i18nc("@item:inmenu", "Duplicate Extruder N°2"), self.acTion2)
         self.addMenuItem(i18n_cura_catalog.i18nc("@item:inmenu", "Duplicate Extruder N°3"), self.acTion3)
+        self.addMenuItem(i18n_cura_catalog.i18nc("@item:inmenu", "Duplicate Extruder N°4"), self.acTion4)
        
     def acTion1(self) -> None:
         self.CopyExtrud(0)
@@ -41,6 +42,9 @@ class Duplicate(Extension):
 
     def acTion3(self) -> None:
         self.CopyExtrud(2)
+ 
+    def acTion4(self) -> None:
+        self.CopyExtrud(3)
         
     # Copy parameter form the ExtruderNb (Reference to the Other Extruder)
     def CopyExtrud(self,ExtruderNb) -> None:
@@ -73,17 +77,29 @@ class Duplicate(Extension):
 
         Refer=stack.extruderList[int(extruder_count-1)]
         # Modification from global_stack to extruders[0]
-        
+        self.NozzleSize=0
         for Extrud in list(global_stack.extruders.values()):
             PosE = int(Extrud.getMetaDataEntry("position"))
             if PosE == ExtruderNb:
-                Refer=Extrud
+                Refer=Extrud  
+ 
+        # Try to get the reference machine_nozzle_size
+        try:
+            extrd = stack.extruderList
+            self.NozzleSize=float(extrd[ExtruderNb].getProperty("machine_nozzle_size","value"))               
+        except:
+            pass
+                    
+        Logger.log("d", "Refrence NozzleSize = %s ", str(self.NozzleSize)) 
         
         for Extrud in list(global_stack.extruders.values()):
             PosE = int(Extrud.getMetaDataEntry("position"))
             #Logger.log("d", "Extruder = %s %s", str(PosE), str(ExtruderNb))            
             if PosE != ExtruderNb:
-                self._doTree(Refer,Extrud,"resolution")
+                C_NozzleSize=float(Extrud.getProperty("machine_nozzle_size","value"))
+                if self.NozzleSize == C_NozzleSize :
+                    self._doTree(Refer,Extrud,"resolution")
+                
                 # Shell before 4.9 and now walls
                 self._doTree(Refer,Extrud,"shell")
                 # New section Arachne and 4.9 ?
