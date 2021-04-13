@@ -103,7 +103,7 @@ class Duplicate(Extension):
                 # Shell before 4.9 and now walls
                 self._doTree(Refer,Extrud,"shell")
                 # New section Arachne and 4.9 ?
-                if self.Major >= 4 and self.Minor >= 9 :
+                if self.Major > 4 or ( self.Major == 4 and self.Minor >= 9 ) :
                     self._doTree(Refer,Extrud,"top_bottom")
                     
                 self._doTree(Refer,Extrud,"infill")
