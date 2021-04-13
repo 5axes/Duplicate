@@ -17,9 +17,11 @@ Duplicate exturder settings for Cura in case of multi-extruder machine. Copy par
 
 From one extruder to the others.
 
-V1.4   -> Add the possibility to duplicate Datas for extruder :
+V1.0.4   -> Add the possibility to duplicate Datas for extruder :
 - N°1
 - N°2
 - N°3
 
 ![Menu](./images/Menu.jpg)
+
+V1.0.6   -> If the Nozzles doesn't have the same diameter then Quality settings are not duplicate on the extruder settings :
