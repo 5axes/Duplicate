@@ -25,3 +25,5 @@ V1.0.4   -> Add the possibility to duplicate Datas for extruder :
 ![Menu](./images/Menu.jpg)
 
 V1.0.6   -> If the Nozzles doesn't have the same diameter then Quality settings are not duplicate on the extruder settings :
+
+V1.1.0   -> Update to Cura 5.0
