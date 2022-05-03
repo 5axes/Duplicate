@@ -1,5 +1,5 @@
-#-------------------------------------------------------------------------------------------
-# Copyright (c) 2020-2021 5@xes
+#----------------------------------------------------------------------------------------------------
+# Copyright (c) 2020-2022 5@xes
 #
 # The Duplicate plugin is released under the terms of the AGPLv3 or higher.
 # Release V1.0.2  Update  "resolution","shell","infill","material","speed","travel","cooling","dual"
@@ -8,7 +8,8 @@
 # Release V1.0.5  Ready for release Arachne or 4.9 ?
 # Release V1.0.6  Bug correction and Nozzle diameter used as condition to duplicate resolution section
 #
-#-------------------------------------------------------------------------------------------
+# Release V1.1.0  Update Cura 5.0
+#----------------------------------------------------------------------------------------------------
 
 from UM.Extension import Extension
 from cura.CuraApplication import CuraApplication
@@ -78,7 +79,9 @@ class Duplicate(Extension):
         Refer=stack.extruderList[int(extruder_count-1)]
         # Modification from global_stack to extruders[0]
         self.NozzleSize=0
-        for Extrud in list(global_stack.extruders.values()):
+        extruder_stack = CuraApplication.getInstance().getExtruderManager().getActiveExtruderStacks()
+        # for Extrud in list(global_stack.extruders.values()):
+        for Extrud in extruder_stack:
             PosE = int(Extrud.getMetaDataEntry("position"))
             if PosE == ExtruderNb:
                 Refer=Extrud  
@@ -90,9 +93,9 @@ class Duplicate(Extension):
         except:
             pass
                     
-        Logger.log("d", "Refrence NozzleSize = %s ", str(self.NozzleSize)) 
-        
-        for Extrud in list(global_stack.extruders.values()):
+
+        # for Extrud in list(global_stack.extruders.values()):
+        for Extrud in extruder_stack:
             PosE = int(Extrud.getMetaDataEntry("position"))
             #Logger.log("d", "Extruder = %s %s", str(PosE), str(ExtruderNb))            
             if PosE != ExtruderNb:
