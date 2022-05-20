@@ -55,7 +55,8 @@ class Duplicate(Extension):
 
         Logger.log('d', "Info CuraVersion --> " + str(CuraVersion))
         
-        # Test version for Cura Master Release
+        # Test version for Cura Master
+        # https://github.com/smartavionics/Cura
         if "master" in CuraVersion :
             self.Major=4
             self.Minor=20  
