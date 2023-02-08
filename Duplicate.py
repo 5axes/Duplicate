@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------------------------------
-# Copyright (c) 2020-2022 5@xes
+# Copyright (c) 2020-2023 5@xes
 #
 # The Duplicate plugin is released under the terms of the AGPLv3 or higher.
 # Release V1.0.2  Update  "resolution","shell","infill","material","speed","travel","cooling","dual"
@@ -9,6 +9,7 @@
 # Release V1.0.6  Bug correction and Nozzle diameter used as condition to duplicate resolution section
 #
 # Release V1.1.0  Update Cura 5.0
+# Release V1.1.1  Update Info on Machine Change
 #----------------------------------------------------------------------------------------------------
 
 from UM.Extension import Extension
@@ -17,7 +18,7 @@ from cura.CuraVersion import CuraVersion
 from UM.Version import Version
 
 from UM.i18n import i18nCatalog
-i18n_cura_catalog = i18nCatalog("cura")
+catalog = i18nCatalog("duplicate")
 i18n_catalog = i18nCatalog("fdmprinter.def.json")
 i18n_extrud_catalog = i18nCatalog("fdmextruder.def.json")
 
@@ -29,12 +30,57 @@ class Duplicate(Extension):
     def __init__(self, parent = None) -> None:
         Extension.__init__(self)
         
+        self._application = CuraApplication.getInstance()
+        
         # Add Plugin Menu
-        self.addMenuItem(i18n_cura_catalog.i18nc("@item:inmenu", "Duplicate Extruder N°1"), self.acTion1)
-        self.addMenuItem(i18n_cura_catalog.i18nc("@item:inmenu", "Duplicate Extruder N°2"), self.acTion2)
-        self.addMenuItem(i18n_cura_catalog.i18nc("@item:inmenu", "Duplicate Extruder N°3"), self.acTion3)
-        self.addMenuItem(i18n_cura_catalog.i18nc("@item:inmenu", "Duplicate Extruder N°4"), self.acTion4)
-       
+        # self.addMenuItem(catalog.i18nc("@item:inmenu", "Liste"), self.acTionList)
+        
+        self._global_stack = None # type: Optional[GlobalStack]
+        self._machine_name = "Unknown"
+        self._application.globalContainerStackChanged.connect(self._onGlobalStackChanged)
+
+    def _onGlobalStackChanged(self)->None:
+        Logger.log("d", "_onGlobalStackChanged")
+        self._application.getMachineManager().globalContainerChanged.connect(self._onMachineChanged)
+        self._global_stack = self._application.getGlobalContainerStack()
+
+    def _onMachineChanged(self)->None:
+        ''' Listen for machine changes made after an Auto Tower is generated 
+            In this case, the Auto Tower needs to be removed and regenerated '''
+        if self._global_stack:
+            extruder_count=self._global_stack.getProperty("machine_extruder_count", "value")
+            _name = self._global_stack.getProperty("machine_name", "value")
+            Logger.log("d", "Extruder = %s", str(extruder_count)) 
+            Logger.log("d", "Machine name = %s", str(_name)) 
+            if self._machine_name != _name:
+                self._machine_name = _name
+                # Add Plugin Menu
+                if extruder_count > 0 :
+                    self.addMenuItem(catalog.i18nc("@item:inmenu", "Duplicate Extruder N°1"), self.acTion1)
+                    Logger.log("d", "addMenuItem N°1")
+                if extruder_count > 1 :
+                    self.addMenuItem(catalog.i18nc("@item:inmenu", "Duplicate Extruder N°2"), self.acTion2)
+                    Logger.log("d", "addMenuItem N°2") 
+                if extruder_count > 2 :
+                    self.addMenuItem(catalog.i18nc("@item:inmenu", "Duplicate Extruder N°3"), self.acTion3)
+                    Logger.log("d", "addMenuItem N°3") 
+                if extruder_count > 3 :
+                    self.addMenuItem(catalog.i18nc("@item:inmenu", "Duplicate Extruder N°4"), self.acTion4)
+                    Logger.log("d", "addMenuItem N°4")
+                if extruder_count > 4 :
+                    self.addMenuItem(catalog.i18nc("@item:inmenu", "Duplicate Extruder N°5"), self.acTion5)
+                    Logger.log("d", "addMenuItem N°5")
+                if extruder_count > 5 :
+                    self.addMenuItem(catalog.i18nc("@item:inmenu", "Duplicate Extruder N°6"), self.acTion6)
+                    Logger.log("d", "addMenuItem N°6")                    
+                self.acTionList()
+        
+    def acTionList(self) -> None:
+        Logger.log("d", "Menu Name = {}", str(self.getMenuName()))
+        Lists=self.getMenuItemList()
+        for li in Lists :
+            Logger.log("d", "Lists = {}", str(li))       
+        
     def acTion1(self) -> None:
         self.CopyExtrud(0)
 
@@ -46,6 +92,13 @@ class Duplicate(Extension):
  
     def acTion4(self) -> None:
         self.CopyExtrud(3)
+
+    def acTion5(self) -> None:
+        self.CopyExtrud(4)
+
+    def acTion6(self) -> None:
+        self.CopyExtrud(5)
+
         
     # Copy parameter form the ExtruderNb (Reference to the Other Extruder)
     def CopyExtrud(self,ExtruderNb) -> None:
