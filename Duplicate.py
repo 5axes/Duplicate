@@ -72,7 +72,16 @@ class Duplicate(Extension):
                     Logger.log("d", "addMenuItem N°5")
                 if extruder_count > 5 :
                     self.addMenuItem(catalog.i18nc("@item:inmenu", "Duplicate Extruder N°6"), self.acTion6)
-                    Logger.log("d", "addMenuItem N°6")                    
+                    Logger.log("d", "addMenuItem N°6")      
+                if extruder_count > 6 :
+                    self.addMenuItem(catalog.i18nc("@item:inmenu", "Duplicate Extruder N°7"), self.acTion6)
+                    Logger.log("d", "addMenuItem N°7")   
+                if extruder_count > 7 :
+                    self.addMenuItem(catalog.i18nc("@item:inmenu", "Duplicate Extruder N°8"), self.acTion6)
+                    Logger.log("d", "addMenuItem N°8")   
+                if extruder_count > 8 :
+                    self.addMenuItem(catalog.i18nc("@item:inmenu", "Duplicate Extruder N°9"), self.acTion6)
+                    Logger.log("d", "addMenuItem N°9")   
                 self.acTionList()
         
     def acTionList(self) -> None:
@@ -98,8 +107,16 @@ class Duplicate(Extension):
 
     def acTion6(self) -> None:
         self.CopyExtrud(5)
-
         
+    def acTion7(self) -> None:
+        self.CopyExtrud(6)
+        
+    def acTion8(self) -> None:
+        self.CopyExtrud(7)
+
+    def acTion9(self) -> None:
+        self.CopyExtrud(8)
+    
     # Copy parameter form the ExtruderNb (Reference to the Other Extruder)
     def CopyExtrud(self,ExtruderNb) -> None:
  
